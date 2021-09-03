@@ -1,7 +1,8 @@
-import {v5 as uuid} from "uuid"
+import {v4 as uuid} from "uuid"
 
-class Window {
-    constructor(title) {
+export default class Window {
+    constructor(title, content) {
+        this.content = content
         this.title = title
         this.uuid = uuid()
         this.x = 0
@@ -9,6 +10,15 @@ class Window {
         this.width = 600
         this.height = 400
         this.isOpen = true
+    }
+
+    /**
+     * create a Window instance from a app
+     * @param app
+     * @returns {*}
+     */
+    static createFromApp(app) {
+        return new Window(app.name, app.content)
     }
 
     /**
