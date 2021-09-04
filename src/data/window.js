@@ -5,8 +5,8 @@ export default class Window {
         this.content = content
         this.title = title
         this.uuid = uuid()
-        this.x = 0
-        this.y = 0
+        this.x = 40
+        this.y = 40
         this.width = 600
         this.height = 400
         this.barHeight = 30

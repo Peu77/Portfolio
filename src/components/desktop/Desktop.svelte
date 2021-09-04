@@ -2,11 +2,13 @@
     import {addWindow, apps, callHooks, removeWindow, windowStore} from "../../data/store"
     import Window from "./window/Window.svelte";
     import WindowClass from "../../data/window"
+    import InformationBar from "./InformationBar.svelte";
 
     let windows = []
     let draggingWindow
     let xDist, yDist
     let mouseX = 0, mouseY = 0
+    const informationBar = 30
 
     windowStore.subscribe(windowsInStore => windows = windowsInStore)
 
@@ -66,7 +68,7 @@
             const websiteWidth = document.body.clientWidth
             const websiteHeight = document.body.clientHeight
             const newX = Math.max(0, Math.min(mouseX - xDist, websiteWidth - window.width))
-            const newY = Math.max(0, Math.min(mouseY - yDist, websiteHeight - window.height))
+            const newY = Math.max(informationBar, Math.min(mouseY - yDist, websiteHeight - window.height))
 
             window.x = newX
             window.y = newY
@@ -78,7 +80,8 @@
 </script>
 
 <div id="desktop">
-    <h1>desktop</h1>
+    <InformationBar height={informationBar}/>
+
     {#each windows as window, i(window.uuid)}
         <Window uuid={window.uuid}/>
     {/each}
@@ -86,9 +89,13 @@
 
 <style>
     #desktop {
+        background: url("/wallpapers/0001.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
         width: 100vw;
         height: 100vh;
-        background-color: #333333;
+
         overflow: hidden;
     }
 </style>

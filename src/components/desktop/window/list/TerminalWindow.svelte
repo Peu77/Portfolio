@@ -45,7 +45,7 @@
 
         <form on:submit={submit}
               id="inputContainer">
-            <img class="arrow" src="right-arrow.png"/>
+            <img class="arrow" src="right-arrow.png" alt="arrow"/>
             <input
                     on:submit={submit}
                     class="text"
