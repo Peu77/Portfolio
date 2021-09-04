@@ -11,12 +11,9 @@ export default class FileHandler {
     static getFilePath(terminalUUID) {
         let path = ""
         this.filePaths.subscribe(value => {
-            if (!value.has(terminalUUID)){
+            if (!value.has(terminalUUID))
                 value.set(terminalUUID, "/")
-                console.log("set " + terminalUUID + " to /")
-            }
 
-            console.log("load " + terminalUUID)
             path = value.get(terminalUUID)
             return value
         })

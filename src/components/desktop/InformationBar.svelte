@@ -1,8 +1,19 @@
 <script>
     export let height
 
-    const date = new Date()
-    const time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+
+    let time = ""
+
+    setInterval(() => {
+        updateTime()
+    }, 1000)
+
+    function updateTime() {
+        const date = new Date()
+        time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+    }
+
+    updateTime()
 </script>
 
 <div id="bar" style="height: {height}px">
@@ -19,7 +30,7 @@
         text-align: center;
     }
 
-    .text{
+    .text {
         display: block;
         margin: auto 0;
     }
