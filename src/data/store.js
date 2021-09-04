@@ -12,8 +12,6 @@ export const apps = [
     new App("terminal", TerminalWindow, "t"),
 ]
 
-console.log(FileHandler.getFilePath())
-
 export const updates = new Map()
 
 export function callHooks(name) {

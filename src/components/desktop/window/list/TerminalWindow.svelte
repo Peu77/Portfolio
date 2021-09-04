@@ -28,7 +28,8 @@
     const utils = {
         push: push,
         pushColor: pushColor,
-        clearTerminal: clearTerminal
+        clearTerminal: clearTerminal,
+        terminalUUID: window.uuid
     }
 
     function submit(event) {

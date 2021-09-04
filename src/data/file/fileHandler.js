@@ -2,15 +2,24 @@ import {writable} from "svelte/store";
 import File, {FileType} from "./file";
 
 export default class FileHandler {
-    static filePath = writable("/")
+    static filePaths = writable(new Map())
     static files = writable([
         new File("/", ".config", FileType.FOLDER),
         new File("/.config", "colors", FileType.FILE)
     ])
 
-    static getFilePath() {
+    static getFilePath(terminalUUID) {
         let path = ""
-        this.filePath.subscribe(value => path = value)
+        this.filePaths.subscribe(value => {
+            if (!value.has(terminalUUID)){
+                value.set(terminalUUID, "/")
+                console.log("set " + terminalUUID + " to /")
+            }
+
+            console.log("load " + terminalUUID)
+            path = value.get(terminalUUID)
+            return value
+        })
         return path
     }
 
@@ -20,8 +29,8 @@ export default class FileHandler {
         return files
     }
 
-    static getFilesInDirectory() {
-        const currentPath = this.getFilePath()
+    static getFilesInDirectory(terminalUUID) {
+        const currentPath = this.getFilePath(terminalUUID)
         return this.getFiles().filter(file => file.path === currentPath)
     }
 }
