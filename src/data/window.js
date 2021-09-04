@@ -9,7 +9,7 @@ export default class Window {
         this.y = 0
         this.width = 600
         this.height = 400
-        this.barHeight = 20
+        this.barHeight = 30
         this.isOpen = true
     }
 

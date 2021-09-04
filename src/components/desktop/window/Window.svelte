@@ -34,7 +34,7 @@
         left: {window.x}px;
         top: {window.y}px;
 ">
-    <WindowBar height={window.barHeight}/>
+    <WindowBar title={window.title} height={window.barHeight}/>
     <svelte:component this={window.content}/>
 </div>
 
@@ -42,12 +42,11 @@
     #window {
         position: absolute;
         background-color: #1c1c1c;
-        box-shadow: 5px 10px 18px #3b3a3a;
-        border-radius: 20px;
+        border-radius: 1em;
         overflow: hidden;
     }
 
     #window:hover {
-        border: 2px solid #2a2aad;
+        border: 2px solid #227272;
     }
 </style>

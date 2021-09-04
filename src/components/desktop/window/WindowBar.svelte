@@ -1,15 +1,24 @@
 <script>
     export let height
+    export let title
 </script>
 
 <div id="windowBar" style="height: {height}px">
-
+    <p id="title">{title}</p>
 </div>
 
 <style>
     #windowBar{
         width: 100%;
-        background-color: #100f0f;
+        background-color: #227272;
         cursor: pointer;
+    }
+
+    #title{
+        font-weight: bold;
+        display: block;
+        text-align: center;
+        color: white;
+        line-height: 30px;
     }
 </style>
