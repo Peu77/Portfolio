@@ -5,7 +5,7 @@ export default class ClearCommand extends Command {
         super("clear", "clear the lines of text", "clear");
     }
 
-    executor(args, sendOutput, clear) {
-        clear()
+    executor(args, utils) {
+        utils.clearTerminal()
     }
 }

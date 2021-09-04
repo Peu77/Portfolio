@@ -19,26 +19,36 @@
         }, 0)
     }
 
-    function scrollDown(){
+    function scrollDown() {
         setTimeout(() => {
             scroll.scrollTop = scroll.scrollHeight + 20
         }, 5)
     }
 
+    const utils = {
+        push: push,
+        pushColor: pushColor,
+        clearTerminal: clearTerminal
+    }
+
     function submit(event) {
         event.preventDefault()
         let text = textInput.value
-        CommandHandler.execute(text, push, clearTerminal)
+        CommandHandler.execute(text, utils)
         textInput.value = ""
         scrollDown()
     }
 
-    function clearTerminal(){
+    function clearTerminal() {
         lines = []
     }
 
-    function push(text){
-        lines = [...lines, text]
+    function push(text) {
+        lines = [...lines, [{text: text, color: "white"}]]
+    }
+
+    function pushColor(...line) {
+        lines = [...lines, [...line]]
     }
 
     onMount(() => {
@@ -52,8 +62,13 @@
     <div id="scroll/{window.uuid}" class="scroll"
          style="max-height: {window.height - window.barHeight}px">
         <div>
-            {#each lines as line}
-                <p class="line">{line}</p>
+            {#each lines as messages}
+                <div class="line">
+
+                    {#each messages as message}
+                        <p style="color: {message.color};" class="line">{message.text}</p>
+                    {/each}
+                </div>
             {/each}
         </div>
 
@@ -79,6 +94,14 @@
         height: 100%;
         overflow: hidden;
         color: white;
+    }
+
+    .line{
+        display: flex;
+    }
+
+    .line *{
+        margin-right: 5px;
     }
 
     #inputContainer {

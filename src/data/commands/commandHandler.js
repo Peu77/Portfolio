@@ -1,19 +1,21 @@
 import ClearCommand from "./list/clearCommand";
+import HelpCommand from "./list/helpCommand";
 
 export default class CommandHandler{
     static commands = [
-        new ClearCommand()
+        new ClearCommand(),
+        new HelpCommand()
     ]
 
-    static execute(input, sendOutput, clear){
+    static execute(input, utils){
         const list = input.split(" ")
         const commandName = list[0]
         const command = this.commands.find(command => command.name.toLowerCase() === commandName.toLowerCase())
 
         if(command == null){
-            sendOutput("command wasn't found")
+            utils.pushColor({text: "command wasn't found", color: "red"})
             return
         }
-        command.executor(list.shift(), sendOutput, clear)
+        command.executor(list.shift(), utils)
     }
 }
