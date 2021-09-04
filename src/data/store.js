@@ -2,20 +2,17 @@ import {writable} from "svelte/store";
 import Window from "./window"
 import HelpWindow from "../components/desktop/window/list/helpWindow/HelpWindow.svelte";
 import App from "./app";
-import File, {FileType} from "./file";
+import File, {FileType} from "./file/file";
 import TerminalWindow from "../components/desktop/window/list/TerminalWindow.svelte";
-
-export const filePath = writable("/")
-export const files = writable([
-    new File(".config", FileType.FOLDER),
-    new File(".config/colors", FileType.FILE)
-])
+import FileHandler from "./file/fileHandler";
 
 let helpApp
 export const apps = [
     helpApp = new App("help", HelpWindow, "h"),
     new App("terminal", TerminalWindow, "t"),
 ]
+
+console.log(FileHandler.getFilePath())
 
 export const updates = new Map()
 

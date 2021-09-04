@@ -1,10 +1,12 @@
 import ClearCommand from "./list/clearCommand";
 import HelpCommand from "./list/helpCommand";
+import ListDirectoryCommand from "./list/listDirectoryCommand";
 
 export default class CommandHandler{
     static commands = [
+        new HelpCommand(),
         new ClearCommand(),
-        new HelpCommand()
+        new ListDirectoryCommand()
     ]
 
     static execute(input, utils){
