@@ -7,6 +7,7 @@
 {#each apps as app}
     <KeyBind keys={["ALT", app.key]} text="open {app.name}"/>
 {/each}
+<KeyBind keys={["ALT", "SHIFT", "c"]} text="close window"/>
 
 
 <style>

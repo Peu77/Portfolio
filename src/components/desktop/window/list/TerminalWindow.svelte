@@ -1,6 +1,7 @@
 <script>
     import {registerListener} from "../../../../data/store";
     import {onMount} from "svelte";
+    import CommandHandler from "../../../../data/commands/commandHandler";
 
     export let window
     let textInput
@@ -27,9 +28,17 @@
     function submit(event) {
         event.preventDefault()
         let text = textInput.value
-        lines = [...lines, text]
+        CommandHandler.execute(text, push, clearTerminal)
         textInput.value = ""
         scrollDown()
+    }
+
+    function clearTerminal(){
+        lines = []
+    }
+
+    function push(text){
+        lines = [...lines, text]
     }
 
     onMount(() => {
