@@ -8,7 +8,7 @@ export default class HelpCommand extends Command{
 
     executor(args, utils) {
         CommandHandler.commands.forEach(command => {
-
+            utils.pushColor({text: command.name, color: "#4ee1a3"}, {text: "--> " + command.description + " : " + command.usage})
         })
     }
 }
