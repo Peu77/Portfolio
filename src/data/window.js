@@ -9,6 +9,7 @@ export default class Window {
         this.y = 0
         this.width = 600
         this.height = 400
+        this.barHeight = 20
         this.isOpen = true
     }
 
@@ -25,12 +26,13 @@ export default class Window {
      * returns if the pointer is in the area of the window
      * @param mouseX
      * @param mouseY
+     * @param drag
      * @returns {boolean}
      */
-    isHover(mouseX, mouseY) {
+    isHover(mouseX, mouseY, drag) {
         return mouseX > this.x &&
             mouseX < this.x + this.width &&
             mouseY > this.y &&
-            mouseY < this.y + this.height
+            mouseY < this.y + (drag ? this.barHeight : this.height)
     }
 }
