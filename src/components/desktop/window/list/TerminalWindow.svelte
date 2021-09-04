@@ -9,6 +9,7 @@
 
     registerListener("click/" + window.uuid, () => {
         select()
+        scrollDown()
     })
 
     function select() {
@@ -17,25 +18,29 @@
         }, 0)
     }
 
-    function submit(event) {
-        event.preventDefault()
-        let text = textInput.value
-        lines = [...lines, text]
-        textInput.value = ""
+    function scrollDown(){
         setTimeout(() => {
             scroll.scrollTop = scroll.scrollHeight + 20
         }, 5)
     }
 
+    function submit(event) {
+        event.preventDefault()
+        let text = textInput.value
+        lines = [...lines, text]
+        textInput.value = ""
+        scrollDown()
+    }
+
     onMount(() => {
         textInput = document.getElementById("text/" + window.uuid)
-        scroll = document.getElementById("scroll")
+        scroll = document.getElementById("scroll/" + window.uuid)
         select()
     })
 </script>
 
 <div id="terminal">
-    <div id="scroll"
+    <div id="scroll/{window.uuid}" class="scroll"
          style="max-height: {window.height - window.barHeight}px">
         <div>
             {#each lines as line}
@@ -51,6 +56,7 @@
                     class="text"
                     id="text/{window.uuid}"
                     type="text"
+                    on:blur={scrollDown}
                     autoCorrect="off"
                     autoCapitalize="none"
                     autoComplete="off">
@@ -84,7 +90,7 @@
         color: white;
     }
 
-    #scroll {
+    .scroll {
         display: flex;
         overflow: auto;
         flex-direction: column;
