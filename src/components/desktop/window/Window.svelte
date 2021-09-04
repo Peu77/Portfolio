@@ -1,6 +1,7 @@
 <script>
     import WindowBar from "./WindowBar.svelte";
     import {callHooks, getWindow, registerListener, windowStore} from "../../../data/store";
+    import { fade } from "svelte/transition";
 
     export let uuid
     let window
@@ -29,6 +30,7 @@
 </script>
 
 <div id="window"
+     in:fade={{delay: 5, duration: 200}} out:fade={{delay: 5, duration: 100}}
      on:mousedown={onWindowClick}
      style="
         width: {window.width}px;
