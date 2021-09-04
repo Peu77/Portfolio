@@ -1,6 +1,6 @@
 import {writable} from "svelte/store";
 import Window from "./window"
-import HelpWindow from "../components/desktop/window/list/HelpWindow.svelte";
+import HelpWindow from "../components/desktop/window/list/helpWindow/HelpWindow.svelte";
 import App from "./app";
 import File, {FileType} from "./file";
 import TerminalWindow from "../components/desktop/window/list/TerminalWindow.svelte";
