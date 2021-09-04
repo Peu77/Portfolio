@@ -4,10 +4,14 @@ export const FileType = {
 }
 
 export default class File {
-    constructor(path, name, fileType) {
-        this.path = path
+    constructor(name, fileType) {
         this.name = name
-        this.fileType = fileType
+        this.type = fileType
         this.content = ""
+    }
+
+    getName() {
+        const list = this.name.split("/")
+        return list[list.length - 1]
     }
 }

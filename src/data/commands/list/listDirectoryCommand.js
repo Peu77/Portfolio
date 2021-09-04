@@ -7,8 +7,8 @@ export default class ListDirectoryCommand extends Command {
     }
 
     executor(args, utils) {
-        FileHandler.getFilesInDirectory(utils.terminalUUID).forEach(file => {
-            utils.push(file.name)
+        FileHandler.getFilesInCurrentDirectory(utils.terminalUUID).forEach(file => {
+            utils.push(file.getName())
         })
     }
 }

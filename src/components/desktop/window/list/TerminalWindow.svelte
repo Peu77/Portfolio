@@ -2,12 +2,19 @@
     import {registerListener} from "../../../../data/store";
     import {onMount} from "svelte";
     import CommandHandler from "../../../../data/commands/commandHandler";
+    import FileHandler from "../../../../data/file/fileHandler";
 
     export let window
     let textInput
     let scroll
     let lines = []
+    let currentPath
 
+    function updatePath() {
+        currentPath = FileHandler.getFilePath(window.uuid)
+    }
+
+    updatePath()
     registerListener("click/" + window.uuid, () => {
         select()
         scrollDown()
@@ -21,7 +28,7 @@
 
     function scrollDown() {
         setTimeout(() => {
-            scroll.scrollTop = scroll.scrollHeight + 20
+            scroll.scrollTop = scroll.scrollHeight
         }, 5)
     }
 
@@ -29,7 +36,8 @@
         push: push,
         pushColor: pushColor,
         clearTerminal: clearTerminal,
-        terminalUUID: window.uuid
+        terminalUUID: window.uuid,
+        updatePath: updatePath
     }
 
     function submit(event) {
@@ -76,6 +84,7 @@
         <form on:submit={submit}
               id="inputContainer">
             <img class="arrow" src="right-arrow.png" alt="arrow"/>
+            <p>{currentPath}</p>
             <input
                     on:submit={submit}
                     class="text"
@@ -97,17 +106,18 @@
         color: white;
     }
 
-    .line{
+    .line {
         display: flex;
     }
 
-    .line *{
+    .line * {
         margin-right: 5px;
     }
 
     #inputContainer {
         display: flex;
         width: 100%;
+        align-content: center;
 
     }
 
@@ -121,6 +131,7 @@
         background-color: transparent;
         border: none;
         color: white;
+        margin-left: 10px;
     }
 
     .scroll {
