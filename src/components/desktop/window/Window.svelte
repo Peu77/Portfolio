@@ -1,6 +1,6 @@
 <script>
     import WindowBar from "./WindowBar.svelte";
-    import {getWindow, registerListener, windowStore} from "../../../data/store";
+    import {callHooks, getWindow, registerListener, windowStore} from "../../../data/store";
 
     export let uuid
     let window
@@ -12,6 +12,8 @@
     }
 
     function onWindowClick() {
+        callHooks("click/" + window.uuid)
+
         windowStore.update(currentWindows => {
             const newList = currentWindows.filter(it => it !== window)
             newList.push(window)
@@ -35,14 +37,14 @@
         top: {window.y}px;
 ">
     <WindowBar title={window.title} height={window.barHeight}/>
-    <svelte:component this={window.content}/>
+    <svelte:component this={window.content} window={window}/>
 </div>
 
 <style>
     #window {
         position: absolute;
         background-color: #1c1c1c;
-        border-radius: 1em;
+        border-radius: 0.5em;
         overflow: hidden;
     }
 

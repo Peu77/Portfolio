@@ -16,18 +16,19 @@
     }
 
     document.addEventListener("keydown", event => {
-        const key = event.key
+        let key = event.key
+
         if (event.altKey) {
             event.preventDefault()
 
-            const app = apps.find(app => app.key === event.key)
+            const app = apps.find(app => app.key === key)
             if (app != null)
                 addWindow(WindowClass.createFromApp(app))
         }
 
         if (event.shiftKey && event.altKey) {
             event.preventDefault()
-            switch (event.key) {
+            switch (key) {
                 case "C":
                     const hoverWindow = getHoveredWindow(mouseX, mouseY, false)
                     if (hoverWindow != null)
