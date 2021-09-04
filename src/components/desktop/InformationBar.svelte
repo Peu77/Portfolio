@@ -5,8 +5,8 @@
     const time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
 </script>
 
-<div id="bar">
-    <h3>{time}</h3>
+<div id="bar" style="height: {height}px">
+    <h3 class="text">{time}</h3>
 </div>
 
 
@@ -14,7 +14,13 @@
     #bar {
         background-color: #4c4c4f;
         color: white;
-        padding: 5px;
+        display: flex;
+        justify-content: center;
         text-align: center;
+    }
+
+    .text{
+        display: block;
+        margin: auto 0;
     }
 </style>

@@ -12,6 +12,11 @@
         width: 100%;
         background-color: #227272;
         cursor: pointer;
+        transition: filter 0.2s linear;
+    }
+
+    #windowBar:hover{
+        filter: brightness(80%);
     }
 
     #title{

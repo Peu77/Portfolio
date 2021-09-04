@@ -49,6 +49,6 @@
     }
 
     #window:hover {
-        border: 2px solid #227272;
+
     }
 </style>
