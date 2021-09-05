@@ -5,10 +5,12 @@
     import InformationBar from "./InformationBar.svelte";
 
     let windows = []
-    let draggingWindow
+    let currentWindow
     let xDist, yDist
     let mouseX = 0, mouseY = 0
     const informationBar = 30
+    let resizing = false
+    let pressAlt = false
 
     windowStore.subscribe(windowsInStore => windows = windowsInStore)
 
@@ -17,8 +19,26 @@
         return hoveredWindows[hoveredWindows.length - 1]
     }
 
+    document.addEventListener("contextmenu", event => {
+        event.preventDefault()
+
+        const hoveredWindow = getHoveredWindow(mouseX, mouseY, false)
+        if (hoveredWindow !== undefined && pressAlt) {
+            console.log("start resizing")
+            currentWindow = hoveredWindow
+            resizing = true
+        }
+    })
+
+    document.addEventListener("keyup", event => {
+        if (event.key === "Alt")
+            pressAlt = false
+    })
+
     document.addEventListener("keydown", event => {
         let key = event.key
+        if (key === "Alt")
+            pressAlt = true
 
         if (event.altKey) {
             event.preventDefault()
@@ -41,7 +61,8 @@
     })
     //call on mouse release
     document.addEventListener("mouseup", event => {
-        draggingWindow = undefined
+        currentWindow = undefined
+        resizing = false
         xDist = 0
         yDist = 0
     })
@@ -54,12 +75,12 @@
         if (window != null) {
             xDist = mouseX - window.x
             yDist = mouseY - window.y
-            draggingWindow = window
+            currentWindow = window
         }
     })
 
     document.addEventListener("mousemove", (event) => {
-        const window = draggingWindow
+        const window = currentWindow
 
         mouseX = event.x
         mouseY = event.y
@@ -67,11 +88,19 @@
             event.preventDefault()
             const websiteWidth = document.body.clientWidth
             const websiteHeight = document.body.clientHeight
-            const newX = Math.max(0, Math.min(mouseX - xDist, websiteWidth - window.width))
-            const newY = Math.max(informationBar, Math.min(mouseY - yDist, websiteHeight - window.height))
+            if(resizing){
+                const newWidth = Math.max(500, mouseX - window.x)
+                const newHeight = Math.max(400, mouseY - window.y)
 
-            window.x = newX
-            window.y = newY
+                window.width = newWidth
+                window.height = newHeight
+            }else{
+                const newX = Math.max(0, Math.min(mouseX - xDist, websiteWidth - window.width))
+                const newY = Math.max(informationBar, Math.min(mouseY - yDist, websiteHeight - window.height))
+
+                window.x = newX
+                window.y = newY
+            }
             callHooks("window/" + window.uuid)
         }
     })
@@ -95,7 +124,6 @@
         background-position: center;
         width: 100vw;
         height: 100vh;
-
         overflow: hidden;
     }
 </style>
