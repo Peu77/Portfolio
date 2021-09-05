@@ -17,7 +17,6 @@ export default class ChangeDirectoryCommand extends Command {
 
         if (newPath.exist) {
             FileHandler.changePath(utils.terminalUUID, newPath.path)
-            utils.push("change directory to: " + newPath.path)
             utils.updatePath()
         } else
             utils.push("folder wasn't found")
