@@ -10,6 +10,12 @@ export default class FileHandler {
         new File( "/.config/colors/settings.txt", FileType.FILE),
     ])
 
+    static addFile(file){
+        this.files.update(files => {
+            return [...files, file]
+        })
+    }
+
     static getFilePath(terminalUUID) {
         let path = ""
         this.filePaths.subscribe(value => {
@@ -38,7 +44,7 @@ export default class FileHandler {
         })
     }
 
-    static findPath(terminalUUID, pathTo){
+    static findPath(terminalUUID, pathTo, cancelOnNotFound = true){
         const fromStart = pathTo[0] === "/"
         let newPath = (fromStart ? "/" : FileHandler.getFilePath(terminalUUID))
         let exist = true
@@ -54,6 +60,7 @@ export default class FileHandler {
             } else {
                 if (folders.find(target => target.name === newPath + folder) === undefined) {
                     exist = false
+                    if(cancelOnNotFound)
                     return false
                 }
                 newPath += folder + "/"

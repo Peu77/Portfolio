@@ -2,13 +2,15 @@ import ClearCommand from "./list/clearCommand";
 import HelpCommand from "./list/helpCommand";
 import ListDirectoryCommand from "./list/listDirectoryCommand";
 import ChangeDirectoryCommand from "./list/changeDirectoryCommand";
+import MakeDirectoryCommand from "./list/makeDirectoryCommand";
 
 export default class CommandHandler {
     static commands = [
         new HelpCommand(),
         new ClearCommand(),
         new ListDirectoryCommand(),
-        new ChangeDirectoryCommand()
+        new ChangeDirectoryCommand(),
+        new MakeDirectoryCommand()
     ]
 
     static execute(input, utils) {
