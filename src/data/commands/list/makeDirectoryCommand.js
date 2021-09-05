@@ -1,7 +1,6 @@
 import Command from "../command";
 import FileHandler from "../../file/fileHandler";
 import File, {FileType} from "../../file/file";
-import CommandHandler from "../commandHandler";
 
 export default class MakeDirectoryCommand extends Command {
     constructor() {

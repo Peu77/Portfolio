@@ -43,6 +43,10 @@
     function submit(event) {
         event.preventDefault()
         let text = textInput.value
+        pushColor({type: "image", src: "right-arrow.png", class: "arrow"}, {
+            text: currentPath,
+            color: "white"
+        }, {text: text, color: "white"})
         CommandHandler.execute(text, utils)
         textInput.value = ""
         scrollDown()
@@ -75,7 +79,11 @@
                 <div class="line">
 
                     {#each messages as message}
-                        <p style="color: {message.color};" class="line">{message.text}</p>
+                        {#if message.type === "text" || message.type === undefined}
+                            <p style="color: {message.color};" class="line">{message.text}</p>
+                        {:else if message.type === "image"}
+                            <img src={message.src} class={message.class || ""} alt=""/>
+                        {/if}
                     {/each}
                 </div>
             {/each}
@@ -121,7 +129,7 @@
 
     }
 
-    #inputContainer .arrow {
+    .arrow {
         max-width: 20px;
     }
 
@@ -132,6 +140,7 @@
         border: none;
         color: white;
         margin-left: 10px;
+        font-weight: bold;
     }
 
     .scroll {
