@@ -4,21 +4,22 @@ import File, {FileType} from "./file";
 export default class FileHandler {
     static filePaths = writable(new Map())
     static files = writable([
-        new File( ".config", FileType.FOLDER),
-        new File( ".config/colors", FileType.FOLDER),
-
+        new File( "/.config", FileType.FOLDER),
+        new File( "/.config/colors", FileType.FOLDER),
+        new File( "/.config/colors/lost.txt", FileType.FILE),
+        new File( "/.config/colors/settings.txt", FileType.FILE),
     ])
 
     static getFilePath(terminalUUID) {
         let path = ""
         this.filePaths.subscribe(value => {
             if (!value.has(terminalUUID))
-                value.set(terminalUUID, "~")
+                value.set(terminalUUID, "/")
 
             path = value.get(terminalUUID)
             return value
         })
-        return path.replace("~", "")
+        return path
     }
 
     static getFiles() {
@@ -35,6 +36,34 @@ export default class FileHandler {
             }
             else return file.name.replace(file.getName(), "") === currentPath
         })
+    }
+
+    static findPath(terminalUUID, pathTo){
+        const fromStart = pathTo[0] === "/"
+        let newPath = (fromStart ? "/" : FileHandler.getFilePath(terminalUUID))
+        let exist = true
+        const folders = this.getDirectories()
+        pathTo.split("/").filter(folder => folder !== "").forEach(folder => {
+            if (folder === "..") {
+                const newList = newPath.split("/")
+                newList.pop()
+                newList.pop()
+
+                newPath = newList.join("/")
+                if(newList.length > 0) newPath += "/"
+            } else {
+                if (folders.find(target => target.name === newPath + folder) === undefined) {
+                    exist = false
+                    return false
+                }
+                newPath += folder + "/"
+            }
+        })
+
+        return {
+            path: newPath,
+            exist: exist
+        }
     }
 
     static getDirectories() {

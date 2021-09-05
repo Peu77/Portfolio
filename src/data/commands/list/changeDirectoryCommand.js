@@ -1,5 +1,5 @@
 import Command from "../command";
-import FileManager from "../../file/fileHandler"
+import FileHandler from "../../file/fileHandler"
 
 export default class ChangeDirectoryCommand extends Command {
     constructor() {
@@ -12,34 +12,12 @@ export default class ChangeDirectoryCommand extends Command {
             return
         }
 
-        const pathTo = args[0]
-        const folders = FileManager.getDirectories()
-        const currentPath = FileManager.getFilePath(utils.terminalUUID)
-        let exist = true
+        let pathTo = args[0]
+        let newPath = FileHandler.findPath(utils.terminalUUID, pathTo)
 
-        let newPath = currentPath
-        pathTo.split("/").forEach(folder => {
-            if (folder === "..") {
-                const newList = newPath.split("/")
-                newList.pop()
-                newList.pop()
-
-                newPath = newList.join("/")
-                if(newList.length > 0) newPath += "/"
-            } else {
-                if (folders.find(target => target.name === newPath + folder) === undefined) {
-                    console.log("folder " + folder + " not found")
-                    exist = false
-                    return false
-                }
-                newPath += folder + "/"
-            }
-        })
-
-
-        if (exist) {
-            FileManager.changePath(utils.terminalUUID, newPath)
-            utils.push("change directory to: " + newPath)
+        if (newPath.exist) {
+            FileHandler.changePath(utils.terminalUUID, newPath.path)
+            utils.push("change directory to: " + newPath.path)
             utils.updatePath()
         } else
             utils.push("folder wasn't found")
