@@ -13,16 +13,16 @@ export default class MakeDirectoryCommand extends Command {
             return
         }
 
-        let pathTo = args[0]
-        let newPath = FileHandler.findPath(utils.terminalUUID, pathTo, false)
-        let path = newPath.path
-        path = path.substring(0, path.length - 1);
-        if (newPath.exist)
-            utils.push("folder already exist")
-        else {
-            const newFolder = new File(path, FileType.FOLDER)
-            FileHandler.addFile(newFolder)
-            utils.push("create folder " + path)
-        }
+            let pathTo = args[0]
+            let newPath = FileHandler.findPath(utils.terminalUUID, pathTo, false)
+            let path = newPath.path
+            path = path.substring(0, path.length - 1);
+            if (newPath.exist)
+                utils.push("folder already exist")
+            else {
+                const newFolder = new File(path, FileType.FOLDER)
+                FileHandler.addFile(newFolder)
+                utils.push("create folder " + path)
+            }
     }
 }
