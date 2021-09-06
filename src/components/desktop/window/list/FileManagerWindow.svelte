@@ -111,7 +111,6 @@
         font-size: 20px;
     }
 
-
     .files {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
         display: grid;
@@ -134,6 +133,7 @@
     }
 
     .file .icon {
+        -webkit-user-drag: none;
         user-select: none;
         width: 100%;
     }
