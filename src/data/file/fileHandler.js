@@ -10,6 +10,7 @@ export default class FileHandler {
         new File( "/.config/colors/settings.txt", FileType.FILE),
     ])
 
+
     static addFile(file){
         this.files.update(files => {
             return [...files, file]
@@ -36,6 +37,16 @@ export default class FileHandler {
 
     static getFilesInCurrentDirectory(terminalUUID) {
         const currentPath = this.getFilePath(terminalUUID)
+        return this.getFiles().filter(file => {
+            if(!file.name.includes("/") && !currentPath.includes("/")){
+                return true
+            }
+            else return file.name.replace(file.getName(), "") === currentPath
+        })
+    }
+
+    static getFilesInDirectory(directory) {
+        const currentPath = this.getFilePath(directory)
         return this.getFiles().filter(file => {
             if(!file.name.includes("/") && !currentPath.includes("/")){
                 return true

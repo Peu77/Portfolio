@@ -24,7 +24,6 @@
 
         const hoveredWindow = getHoveredWindow(mouseX, mouseY, false)
         if (hoveredWindow !== undefined && pressAlt) {
-            console.log("start resizing")
             currentWindow = hoveredWindow
             resizing = true
         }

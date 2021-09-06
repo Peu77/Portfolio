@@ -8,6 +8,7 @@
     <KeyBind keys={["ALT", app.key]} text="open {app.name}"/>
 {/each}
 <KeyBind keys={["ALT", "SHIFT", "c"]} text="close window"/>
+<KeyBind keys={["ALT", "RIGHT"]} text="resize window"/>
 
 
 <style>

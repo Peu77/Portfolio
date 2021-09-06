@@ -1,3 +1,6 @@
+import {fileIcons} from "../store";
+
+
 export const FileType = {
     FOLDER: "folder",
     FILE: "file"
@@ -13,5 +16,18 @@ export default class File {
     getName() {
         const list = this.name.split("/")
         return list[list.length - 1]
+    }
+
+    getFileEnding() {
+        if (this.type === FileType.FOLDER) return ""
+        const name = this.getName()
+        const lastDot = name.lastIndexOf('.');
+
+        const fileName = name.substring(0, lastDot);
+        return name.substring(lastDot + 1)
+    }
+
+    getIconSrc() {
+        return fileIcons.find(fileIcon => fileIcon.name === this.getFileEnding()).fileSrc
     }
 }

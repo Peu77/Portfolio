@@ -2,14 +2,20 @@ import {writable} from "svelte/store";
 import Window from "./window"
 import HelpWindow from "../components/desktop/window/list/helpWindow/HelpWindow.svelte";
 import App from "./app";
-import File, {FileType} from "./file/file";
 import TerminalWindow from "../components/desktop/window/list/TerminalWindow.svelte";
-import FileHandler from "./file/fileHandler";
+import FileManagerWindow from "../components/desktop/window/list/FileManagerWindow.svelte";
+import FileIcon from "./file/fileIcon";
 
 let helpApp
 export const apps = [
     helpApp = new App("help", HelpWindow, "h"),
     new App("terminal", TerminalWindow, "t"),
+    new App("File Manager", FileManagerWindow, "f"),
+]
+
+export const fileIcons = [
+    new FileIcon("", "icons/folder.png"),
+    new FileIcon("txt", "icons/text.png"),
 ]
 
 export const updates = new Map()
