@@ -8,6 +8,7 @@
     let pathInput
     let currentFile = ""
     let currentFiles = []
+    let fileClickTime = new Map()
 
     function updatePath() {
         currentPath = FileHandler.getFilePath(window.uuid)
@@ -20,13 +21,39 @@
     updatePath()
     pathInput = currentPath
 
-    function changePath(fileName) {
-        if (currentFile === fileName)
-            currentFile = ""
-        else
-            currentFile = fileName
+
+    function clickFile(fileName) {
+        let doubleClick = false
+
+        if (fileClickTime[fileName] === undefined)
+            fileClickTime[fileName] = Date.now()
+        else {
+            if (Date.now() - fileClickTime[fileName] < 250)
+                doubleClick = true
+
+            fileClickTime[fileName] = Date.now()
+        }
+
+
+        if (doubleClick) {
+            const findPath = FileHandler.findPath(window.uuid, fileName)
+            if (findPath.exist) {
+                const path = findPath.path
+                setPath(path)
+            }
+        } else {
+            if (currentFile === fileName)
+                currentFile = ""
+            else
+                currentFile = fileName
+        }
     }
 
+    function setPath(newPath){
+        currentPath = newPath
+        pathInput = newPath
+        FileHandler.changePath(window.uuid, newPath)
+    }
 
     onMount(() => {
         updateCurrentFiles()
@@ -42,20 +69,17 @@
         if(event.key === "Enter"){
             const findPath = FileHandler.findPath(window.uuid, pathInput)
             const path = findPath.path
-            if(findPath.exist){
-                  currentPath = path
-                  pathInput = path
-                  FileHandler.changePath(window.uuid, path)
-            }else
+            if(findPath.exist)
+                  setPath(path)
+            else
                 pathInput = currentPath
         }
     }}/>
 
-    <div class="files"
-         on:click={() => console.log("tests")}>
+    <div class="files">
         {#each currentFiles as file}
             <div class={"file " + (currentFile === file.getName() ? "current" : "")}
-                 on:click={() => changePath(file.getName())}>
+                 on:click={() => clickFile(file.getName())}>
                 <img class="icon" src={file.getIconSrc()} alt=""/>
                 <p>{file.getName() }</p>
             </div>
@@ -92,6 +116,6 @@
 
     .file .icon {
         user-select: none;
-        max-width: 100%;
+        width: 100%;
     }
 </style>
