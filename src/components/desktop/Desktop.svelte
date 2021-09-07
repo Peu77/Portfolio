@@ -9,9 +9,11 @@
         windowStore
     } from "../../data/store"
     import Window from "./window/Window.svelte";
+    import WindowData from "../../data/window"
     import WindowClass from "../../data/window"
     import InformationBar from "./InformationBar.svelte";
     import ContextMenu from "./ContextMenu.svelte";
+    import SearchPanel from "./SearchPanel.svelte";
 
     let windows = []
     let currentWindow
@@ -20,6 +22,8 @@
     const informationBar = 30
     let resizing = false
     let pressAlt = false
+    let lastKey = ""
+    let searchPanel = false
 
     let currentContext = {}
 
@@ -49,8 +53,14 @@
 
     document.addEventListener("keydown", event => {
         let key = event.key
+
+        if (key === "Escape")
+            searchPanel = false
         if (key === "Alt")
             pressAlt = true
+
+        if (searchPanel)
+            return
 
         if (event.altKey) {
             event.preventDefault()
@@ -62,14 +72,45 @@
 
         if (event.shiftKey && event.altKey) {
             event.preventDefault()
-            switch (key) {
-                case "C":
-                    const hoverWindow = getHoveredWindow(mouseX, mouseY, false)
-                    if (hoverWindow != null)
+            const hoverWindow = getHoveredWindow(mouseX, mouseY, false)
+            if (hoverWindow != null)
+                switch (key) {
+                    case "C":
                         removeWindow(hoverWindow.uuid)
-                    break
-            }
+                        break
+                    case "F":
+                        const websiteWidth = document.body.clientWidth
+                        const websiteHeight = document.body.clientHeight
+
+                        if (hoverWindow.fullscreen) {
+                            const newWidth = WindowData.defaultWidth
+                            const newHeight = WindowData.defaultHeight
+                            hoverWindow.width = newWidth
+                            hoverWindow.height = newHeight
+                            hoverWindow.x = websiteWidth / 2 - newWidth / 2
+                            hoverWindow.y = websiteHeight / 2 - newHeight / 2
+                        } else {
+                            hoverWindow.width = websiteWidth
+                            hoverWindow.height = websiteHeight - informationBar
+                            hoverWindow.x = 0
+                            hoverWindow.y = informationBar
+                        }
+
+                        hoverWindow.fullscreen = !hoverWindow.fullscreen
+
+                        callHooks("window/" + hoverWindow.uuid)
+                        break
+                }
+            return
         }
+
+        if (lastKey === "Shift" && key === "Shift" && !event.altKey && event.shiftKey) {
+            searchPanel = true
+            lastKey = ""
+            return
+        }
+
+        lastKey = key
     })
     document.addEventListener("click", () => {
         closeContextMenu()
@@ -83,6 +124,8 @@
     })
 
     document.addEventListener("mousedown", event => {
+        if (searchPanel)
+            return
         const mouseX = event.x
         const mouseY = event.y
         const window = getHoveredWindow(mouseX, mouseY, true)
@@ -95,6 +138,8 @@
     })
 
     document.addEventListener("mousemove", (event) => {
+        if (searchPanel)
+            return
         const window = currentWindow
 
         mouseX = event.x
@@ -109,6 +154,7 @@
 
                 window.width = newWidth
                 window.height = newHeight
+                window.fullscreen = false
             } else {
                 const newX = Math.max(0, Math.min(mouseX - xDist, websiteWidth - window.width))
                 const newY = Math.max(informationBar, Math.min(mouseY - yDist, websiteHeight - window.height))
@@ -131,6 +177,10 @@
     {/each}
 
     <ContextMenu data={currentContext}/>
+
+    {#if searchPanel}
+        <SearchPanel/>
+    {/if}
 </div>
 
 <style>

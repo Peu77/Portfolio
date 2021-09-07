@@ -1,15 +1,19 @@
 import {v4 as uuid} from "uuid"
 
 export default class Window {
+    static defaultWidth = 700
+    static defaultHeight = 500
+
     constructor(title, content) {
         this.content = content
         this.title = title
         this.uuid = uuid()
         this.x = 40
         this.y = 40
-        this.width = 700
-        this.height = 500
+        this.width = Window.defaultWidth
+        this.height = Window.defaultHeight
         this.barHeight = 30
+        this.fullscreen = false
         this.isOpen = true
     }
 
