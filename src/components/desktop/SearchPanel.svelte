@@ -47,7 +47,7 @@
 </script>
 
 <svelte:window on:keyup={onKeyPress}/>
-<div id="black"></div>
+<div id="black" on:click={close}></div>
 <div class="searchPanel">
     <input type="text"
            placeholder="search"
