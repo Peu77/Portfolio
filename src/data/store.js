@@ -13,6 +13,10 @@ export const apps = [
     new App("File Manager", FileManagerWindow, "f"),
 ]
 
+export function getAppByName(appName){
+    return apps.find(app => app.name.toLowerCase() === appName.toLowerCase())
+}
+
 export const currentContextMenu = writable({
     menu: {
         open: false,

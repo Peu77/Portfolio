@@ -37,11 +37,11 @@ export default class FileHandler {
 
     static getFilesInCurrentDirectory(terminalUUID) {
         const currentPath = this.getFilePath(terminalUUID)
+
         return this.getFiles().filter(file => {
-            if(!file.name.includes("/") && !currentPath.includes("/")){
+            if (!file.name.includes("/") && !currentPath.includes("/")) {
                 return true
-            }
-            else return file.name.replace(file.getName(), "") === currentPath
+            } else return file.name.replace(file.getName(), "") === currentPath
         })
     }
 

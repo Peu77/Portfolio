@@ -1,15 +1,19 @@
 <script>
     import FileHandler from "../../../../data/file/fileHandler";
     import {afterUpdate, onMount} from "svelte";
-    import {updateDataOfContextMenu} from "../../../../data/store";
+    import {addWindow, getAppByName, updateDataOfContextMenu} from "../../../../data/store";
+    import Window from "../../../../data/window";
 
     export let window
-    let width = window.width
     let currentPath = ""
     let pathInput
     let currentFile = ""
     let currentFiles = []
     let fileClickTime = new Map()
+
+    FileHandler.files.subscribe(files => {
+        updateCurrentFiles()
+    })
 
     function updatePath() {
         currentPath = FileHandler.getFilePath(window.uuid)
@@ -43,7 +47,7 @@
         }
     }
 
-    function openFolder(folderName){
+    function openFolder(folderName) {
         const findPath = FileHandler.findPath(window.uuid, folderName)
         if (findPath.exist) {
             const path = findPath.path
@@ -51,7 +55,7 @@
         }
     }
 
-    function onRightClickFile(fileName, x, y) {
+    function onRightClickFile(filePath, fileName, x, y) {
         updateDataOfContextMenu([
             {
                 name: "delete",
@@ -60,9 +64,14 @@
             {
                 name: "open",
                 function: () => openFolder(fileName)
-            },         {
-                name: "open2",
-                function: () => console.log("open " + fileName)
+            }, {
+                name: "open in new Window",
+                function: () => {
+                    const newWindow = Window.createFromApp(getAppByName("File Manager"))
+                    addWindow(newWindow)
+                    const uuid = newWindow.uuid
+                    FileHandler.changePath(uuid, FileHandler.findPath(uuid, filePath).path)
+                }
             }
         ], x, y)
         currentFile = fileName
@@ -75,14 +84,11 @@
         updateCurrentFiles()
     }
 
-    onMount(() => {
-        updateCurrentFiles()
-    })
+    onMount(
+        updateCurrentFiles
+    )
 
-    afterUpdate(() => {
-        updateCurrentFiles()
-        width = window.width
-    })
+
 </script>
 <div class="fileManager">
     <div class="inputs">
@@ -101,7 +107,7 @@
                  on:click={() => onClickFile(file.getName())}
                  on:mousedown={event => {
                          if(event.which === 3)
-                             onRightClickFile(file.getName(), event.x, event.y)
+                             onRightClickFile(file.name, file.getName(), event.x, event.y)
                      }}>
                 <img class="icon" src={file.getIconSrc()} alt=""/>
                 <p>{file.getName() }</p>
