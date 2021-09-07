@@ -186,7 +186,7 @@
 
 <style>
     #desktop {
-        background: url("/wallpapers/0001.jpg");
+        background: url("/wallpaper.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
