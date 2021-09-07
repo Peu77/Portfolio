@@ -5,5 +5,6 @@ export default class Command {
         this.usage = usage
     }
 
-    executor(args, utils) {}
+    executor(args, utils) {
+    }
 }

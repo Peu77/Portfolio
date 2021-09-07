@@ -12,7 +12,6 @@
 <KeyBind keys={["ALT", "RIGHT"]} text="resize window"/>
 <KeyBind keys={["SHIFT", "SHIFT"]} text="open search-bar"/>
 
-
 <style>
     h3 {
         text-align: center;

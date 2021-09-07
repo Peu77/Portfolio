@@ -12,16 +12,16 @@
         const key = event.key
         switch (key) {
             case "ArrowUp":
-                if(currentIndex > 0)
+                if (currentIndex > 0)
                     currentIndex--
                 break
             case "ArrowDown":
-                if(currentIndex < foundApps.length - 1)
+                if (currentIndex < foundApps.length - 1)
                     currentIndex++
                 break
             case "Enter":
                 const selectedApp = foundApps[currentIndex]
-                if(selectedApp != null){
+                if (selectedApp != null) {
                     const newWindow = Window.createFromApp(selectedApp)
                     addWindow(newWindow)
                     close()
@@ -34,7 +34,7 @@
         foundApps = apps.filter(app => app.name.toLowerCase().includes(searString.toLowerCase()))
         const maxLength = foundApps.length - 1
 
-        if(currentIndex > maxLength){
+        if (currentIndex > maxLength) {
             currentIndex = 0
         }
     }
@@ -63,7 +63,7 @@
     <div class="apps">
         {#each foundApps as app, i}
             <div on:click={() => currentIndex = i}
-                    class={"searchResult " + (i === currentIndex? "current" : "")}>
+                 class={"searchResult " + (i === currentIndex? "current" : "")}>
                 <p>{app.name}</p>
                 <p>{app.description}</p>
             </div>
@@ -125,7 +125,8 @@
         padding: 10px 0;
         cursor: pointer;
     }
-    .current, .searchResult:hover{
+
+    .current, .searchResult:hover {
         color: #227272;
         font-weight: bold;
     }

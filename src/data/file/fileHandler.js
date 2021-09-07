@@ -4,14 +4,14 @@ import File, {FileType} from "./file";
 export default class FileHandler {
     static filePaths = writable(new Map())
     static files = writable([
-        new File( "/.config", FileType.FOLDER),
-        new File( "/.config/colors", FileType.FOLDER),
-        new File( "/.config/colors/lost.txt", FileType.FILE),
-        new File( "/.config/colors/settings.txt", FileType.FILE),
+        new File("/.config", FileType.FOLDER),
+        new File("/.config/colors", FileType.FOLDER),
+        new File("/.config/colors/lost.txt", FileType.FILE),
+        new File("/.config/colors/settings.txt", FileType.FILE),
     ])
 
 
-    static addFile(file){
+    static addFile(file) {
         this.files.update(files => {
             return [...files, file]
         })
@@ -48,14 +48,13 @@ export default class FileHandler {
     static getFilesInDirectory(directory) {
         const currentPath = this.getFilePath(directory)
         return this.getFiles().filter(file => {
-            if(!file.name.includes("/") && !currentPath.includes("/")){
+            if (!file.name.includes("/") && !currentPath.includes("/")) {
                 return true
-            }
-            else return file.name.replace(file.getName(), "") === currentPath
+            } else return file.name.replace(file.getName(), "") === currentPath
         })
     }
 
-    static findPath(terminalUUID, pathTo, cancelOnNotFound = true){
+    static findPath(terminalUUID, pathTo, cancelOnNotFound = true) {
         const fromStart = pathTo[0] === "/"
         let newPath = (fromStart ? "/" : FileHandler.getFilePath(terminalUUID))
         let exist = true
@@ -67,12 +66,12 @@ export default class FileHandler {
                 newList.pop()
 
                 newPath = newList.join("/")
-                if(newList.length > 0) newPath += "/"
+                if (newList.length > 0) newPath += "/"
             } else {
                 if (folders.find(target => target.name === newPath + folder) === undefined) {
                     exist = false
-                    if(cancelOnNotFound)
-                    return false
+                    if (cancelOnNotFound)
+                        return false
                 }
                 newPath += folder + "/"
             }

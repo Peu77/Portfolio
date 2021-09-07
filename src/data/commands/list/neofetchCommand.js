@@ -26,7 +26,7 @@ export default class NeofetchCommand extends Command {
             " `++:.                           `-/+/\n" +
             " .`                                 `").split("\n")
 
-        logo.forEach(line =>  {
+        logo.forEach(line => {
             utils.push(line)
         })
     }
