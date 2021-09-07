@@ -13,6 +13,33 @@ export const apps = [
     new App("File Manager", FileManagerWindow, "f"),
 ]
 
+export const currentContextMenu = writable({
+    menu: {
+        open: false,
+        x: 0,
+        y: 0
+    },
+    menuList: []
+})
+
+export function closeContextMenu(){
+    currentContextMenu.update(currentData => {
+        currentData.menu.open = false
+        return currentData
+    })
+}
+
+export function updateDataOfContextMenu(menuList, x, y){
+    currentContextMenu.update(currentData => {
+        currentData.menuList = menuList
+        const menu = currentData.menu
+        menu.open = true
+        menu.x = x
+        menu.y = y
+        return currentData
+    })
+}
+
 export const fileIcons = [
     new FileIcon("", "icons/folder.png"),
     new FileIcon("txt", "icons/text.png"),

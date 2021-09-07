@@ -1,6 +1,7 @@
 <script>
     import FileHandler from "../../../../data/file/fileHandler";
     import {afterUpdate, onMount} from "svelte";
+    import {updateDataOfContextMenu} from "../../../../data/store";
 
     export let window
     let width = window.width
@@ -21,7 +22,7 @@
     updatePath()
     pathInput = currentPath
 
-    function clickFile(fileName) {
+    function onClickFile(fileName) {
         let doubleClick = false
         if (fileClickTime[fileName] === undefined)
             fileClickTime[fileName] = Date.now()
@@ -33,11 +34,7 @@
         }
 
         if (doubleClick) {
-            const findPath = FileHandler.findPath(window.uuid, fileName)
-            if (findPath.exist) {
-                const path = findPath.path
-                setPath(path)
-            }
+            openFolder(fileName)
         } else {
             if (currentFile === fileName)
                 currentFile = ""
@@ -46,10 +43,36 @@
         }
     }
 
+    function openFolder(folderName){
+        const findPath = FileHandler.findPath(window.uuid, folderName)
+        if (findPath.exist) {
+            const path = findPath.path
+            setPath(path)
+        }
+    }
+
+    function onRightClickFile(fileName, x, y) {
+        updateDataOfContextMenu([
+            {
+                name: "delete",
+                function: () => console.log("delete " + fileName)
+            },
+            {
+                name: "open",
+                function: () => openFolder(fileName)
+            },         {
+                name: "open2",
+                function: () => console.log("open " + fileName)
+            }
+        ], x, y)
+        currentFile = fileName
+    }
+
     function setPath(newPath) {
         currentPath = newPath
         pathInput = newPath
         FileHandler.changePath(window.uuid, newPath)
+        updateCurrentFiles()
     }
 
     onMount(() => {
@@ -67,23 +90,24 @@
         if(event.key === "Enter"){
             const findPath = FileHandler.findPath(window.uuid, pathInput)
             const path = findPath.path
-            if(findPath.exist)
-                  setPath(path)
-            else
-                pathInput = currentPath
+          setPath(path)
         }
     }}/>
     </div>
 
-        <div class="files">
-            {#each currentFiles as file}
-                <div class={"file " + (currentFile === file.getName() ? "current" : "")}
-                     on:click={() => clickFile(file.getName())}>
-                    <img class="icon" src={file.getIconSrc()} alt=""/>
-                    <p>{file.getName() }</p>
-                </div>
-            {/each}
-        </div>
+    <div class="files">
+        {#each currentFiles as file}
+            <div class={"file " + (currentFile === file.getName() ? "current" : "")}
+                 on:click={() => onClickFile(file.getName())}
+                 on:mousedown={event => {
+                         if(event.which === 3)
+                             onRightClickFile(file.getName(), event.x, event.y)
+                     }}>
+                <img class="icon" src={file.getIconSrc()} alt=""/>
+                <p>{file.getName() }</p>
+            </div>
+        {/each}
+    </div>
 </div>
 
 
@@ -96,12 +120,12 @@
         overflow: auto;
     }
 
-    .inputs{
+    .inputs {
         display: flex;
         margin-bottom: 10px;
     }
 
-    .input{
+    .input {
         padding: 3px;
         color: white;
         background-color: #0e0e0e;
@@ -126,6 +150,7 @@
         text-align: center;
         padding: 5px;
         border-radius: 5px;
+        transition: background-color 0.05s;
     }
 
     .current {

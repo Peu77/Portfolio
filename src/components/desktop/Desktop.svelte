@@ -1,8 +1,17 @@
 <script>
-    import {addWindow, apps, callHooks, removeWindow, windowStore} from "../../data/store"
+    import {
+        addWindow,
+        apps,
+        callHooks,
+        closeContextMenu,
+        currentContextMenu,
+        removeWindow,
+        windowStore
+    } from "../../data/store"
     import Window from "./window/Window.svelte";
     import WindowClass from "../../data/window"
     import InformationBar from "./InformationBar.svelte";
+    import ContextMenu from "./ContextMenu.svelte";
 
     let windows = []
     let currentWindow
@@ -11,6 +20,10 @@
     const informationBar = 30
     let resizing = false
     let pressAlt = false
+
+    let currentContext = {}
+
+    currentContextMenu.subscribe(value => currentContext = value)
 
     windowStore.subscribe(windowsInStore => windows = windowsInStore)
 
@@ -58,6 +71,9 @@
             }
         }
     })
+    document.addEventListener("click", () => {
+        closeContextMenu()
+    })
     //call on mouse release
     document.addEventListener("mouseup", event => {
         currentWindow = undefined
@@ -87,13 +103,13 @@
             event.preventDefault()
             const websiteWidth = document.body.clientWidth
             const websiteHeight = document.body.clientHeight
-            if(resizing){
+            if (resizing) {
                 const newWidth = Math.max(500, mouseX - window.x)
                 const newHeight = Math.max(400, mouseY - window.y)
 
                 window.width = newWidth
                 window.height = newHeight
-            }else{
+            } else {
                 const newX = Math.max(0, Math.min(mouseX - xDist, websiteWidth - window.width))
                 const newY = Math.max(informationBar, Math.min(mouseY - yDist, websiteHeight - window.height))
 
@@ -113,6 +129,8 @@
     {#each windows as window, i(window.uuid)}
         <Window uuid={window.uuid}/>
     {/each}
+
+    <ContextMenu data={currentContext}/>
 </div>
 
 <style>

@@ -15,7 +15,7 @@ export default class NeofetchCommand extends Command {
             "             `/:-:++oooo+:                 Languages: Java, Kotlin, JavaScript\n" +
             "            `/++++/+++++++:                TypeScript, C++, Php, Python\n" +
             "           `/++++++++++++++:               Currently learning: Rust\n" +
-            "          `/+++ooooooooooooo/`             Window-Manager: DWM\n" +
+            "          `/+++ooooooooooooo/`\n" +
             "         ./ooosssso++osssssso+`\n" +
             "        .oossssso-````/ossssss+`\n" +
             "       -osssssso.      :ssssssso.\n" +
