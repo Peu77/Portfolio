@@ -1,6 +1,7 @@
 <script>
     import {addWindow, apps} from "../../data/store";
     import Window from "../../data/window";
+    import {onMount} from "svelte";
 
     let searString = ""
     let foundApps = []
@@ -37,15 +38,32 @@
             currentIndex = 0
         }
     }
+
+    onMount(() => {
+        setTimeout(() => {
+            document.getElementById("input").focus()
+        }, 0)
+    })
 </script>
 
 <svelte:window on:keyup={onKeyPress}/>
 <div id="black"></div>
 <div class="searchPanel">
-    <input type="text" placeholder="search" class="input" bind:value={searString}>
+    <input type="text"
+           placeholder="search"
+           class="input"
+           id="input"
+           bind:value={searString}
+           onblur="this.focus()"
+           autoCorrect="off"
+           autoCapitalize="none"
+           autoComplete="off"
+    >
+
     <div class="apps">
         {#each foundApps as app, i}
-            <div class={"searchResult " + (i === currentIndex? "current" : "")}>
+            <div on:click={() => currentIndex = i}
+                    class={"searchResult " + (i === currentIndex? "current" : "")}>
                 <p>{app.name}</p>
                 <p>{app.description}</p>
             </div>
@@ -105,9 +123,9 @@
         font-size: 20px;
         color: white;
         padding: 10px 0;
+        cursor: pointer;
     }
-
-    .current{
+    .current, .searchResult:hover{
         color: #227272;
         font-weight: bold;
     }
