@@ -1,23 +1,60 @@
 <script>
-    import {apps} from "../../data/store";
+    import {addWindow, apps} from "../../data/store";
+    import Window from "../../data/window";
 
     let searString = ""
+    let foundApps = []
+    let currentIndex = 0
+    export let close
+
+    function onKeyPress(event) {
+        const key = event.key
+        switch (key) {
+            case "ArrowUp":
+                if(currentIndex > 0)
+                    currentIndex--
+                break
+            case "ArrowDown":
+                if(currentIndex < foundApps.length - 1)
+                    currentIndex++
+                break
+            case "Enter":
+                const selectedApp = foundApps[currentIndex]
+                if(selectedApp != null){
+                    const newWindow = Window.createFromApp(selectedApp)
+                    addWindow(newWindow)
+                    close()
+                }
+                break
+        }
+    }
+
+    $: {
+        foundApps = apps.filter(app => app.name.toLowerCase().includes(searString.toLowerCase()))
+        const maxLength = foundApps.length - 1
+
+        if(currentIndex > maxLength){
+            currentIndex = 0
+        }
+    }
 </script>
 
+<svelte:window on:keyup={onKeyPress}/>
 <div id="black"></div>
 <div class="searchPanel">
     <input type="text" placeholder="search" class="input" bind:value={searString}>
     <div class="apps">
-        {#each apps.filter(app => app.name.toLowerCase().includes(searString.toLowerCase())) as app}
-            <div class="searchResult">
+        {#each foundApps as app, i}
+            <div class={"searchResult " + (i === currentIndex? "current" : "")}>
                 <p>{app.name}</p>
+                <p>{app.description}</p>
             </div>
         {/each}
     </div>
 </div>
 
 <style>
-    #black{
+    #black {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -45,7 +82,7 @@
         padding: 70px;
     }
 
-    .input{
+    .input {
         outline: none;
         border: none;
         padding: 5px;
@@ -56,8 +93,22 @@
         width: 100%;
     }
 
-    .searchResult{
+    .apps {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .searchResult {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
         font-size: 20px;
         color: white;
+        padding: 10px 0;
+    }
+
+    .current{
+        color: #227272;
+        font-weight: bold;
     }
 </style>

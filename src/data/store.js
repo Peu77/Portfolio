@@ -7,13 +7,13 @@ import FileManagerWindow from "../components/desktop/window/list/FileManagerWind
 import FileIcon from "./file/fileIcon";
 
 let helpApp
-export const apps = [
-    helpApp = new App("help", HelpWindow, "h"),
-    new App("terminal", TerminalWindow, "t"),
-    new App("File Manager", FileManagerWindow, "f"),
+export let apps = [
+    helpApp = new App("help", "show you help information's", HelpWindow, "h"),
+    new App("terminal", "a terminal emulator", TerminalWindow, "t"),
+    new App("File Manager", "a graphical user interface for you're files", FileManagerWindow, "f"),
 ]
 
-export function getAppByName(appName){
+export function getAppByName(appName) {
     return apps.find(app => app.name.toLowerCase() === appName.toLowerCase())
 }
 
@@ -26,14 +26,14 @@ export const currentContextMenu = writable({
     menuList: []
 })
 
-export function closeContextMenu(){
+export function closeContextMenu() {
     currentContextMenu.update(currentData => {
         currentData.menu.open = false
         return currentData
     })
 }
 
-export function updateDataOfContextMenu(menuList, x, y){
+export function updateDataOfContextMenu(menuList, x, y) {
     currentContextMenu.update(currentData => {
         currentData.menuList = menuList
         const menu = currentData.menu

@@ -56,6 +56,7 @@
 
         if (key === "Escape")
             searchPanel = false
+
         if (key === "Alt")
             pressAlt = true
 
@@ -179,7 +180,7 @@
     <ContextMenu data={currentContext}/>
 
     {#if searchPanel}
-        <SearchPanel/>
+        <SearchPanel close={() => searchPanel = false}/>
     {/if}
 </div>
 
