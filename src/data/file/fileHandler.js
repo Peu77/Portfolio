@@ -6,7 +6,7 @@ export default class FileHandler {
     static files = writable([
         new File("/.config", FileType.FOLDER),
         new File("/.config/colors", FileType.FOLDER),
-        new File("/.config/colors/lost.txt", FileType.FILE),
+        new File("/.config/colors/test.txt", FileType.FILE),
         new File("/.config/colors/settings.txt", FileType.FILE),
     ])
 

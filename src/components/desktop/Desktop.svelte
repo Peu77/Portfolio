@@ -14,12 +14,14 @@
     import InformationBar from "./InformationBar.svelte";
     import ContextMenu from "./ContextMenu.svelte";
     import SearchPanel from "./SearchPanel.svelte";
+    import TaskBar from "./TaskBar.svelte";
 
     let windows = []
     let currentWindow
     let xDist, yDist
     let mouseX = 0, mouseY = 0
-    const informationBar = 30
+    const informationBarHeight = 30
+    const taskBarHeight = 70
     let resizing = false
     let pressAlt = false
     let lastKey = ""
@@ -92,9 +94,9 @@
                             hoverWindow.y = websiteHeight / 2 - newHeight / 2
                         } else {
                             hoverWindow.width = websiteWidth
-                            hoverWindow.height = websiteHeight - informationBar
+                            hoverWindow.height = websiteHeight - informationBarHeight - taskBarHeight
                             hoverWindow.x = 0
-                            hoverWindow.y = informationBar
+                            hoverWindow.y = informationBarHeight
                         }
 
                         hoverWindow.fullscreen = !hoverWindow.fullscreen
@@ -158,7 +160,7 @@
                 window.fullscreen = false
             } else {
                 const newX = Math.max(0, Math.min(mouseX - xDist, websiteWidth - window.width))
-                const newY = Math.max(informationBar, Math.min(mouseY - yDist, websiteHeight - window.height))
+                const newY = Math.max(informationBarHeight, Math.min(mouseY - yDist, websiteHeight - taskBarHeight - window.height))
 
                 window.x = newX
                 window.y = newY
@@ -171,8 +173,8 @@
 </script>
 
 <div id="desktop">
-    <InformationBar height={informationBar}/>
-
+    <InformationBar height={informationBarHeight}/>
+    <TaskBar height={taskBarHeight}/>
     {#each windows as window, i(window.uuid)}
         <Window uuid={window.uuid}/>
     {/each}
