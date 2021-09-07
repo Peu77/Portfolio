@@ -80,7 +80,7 @@
 
                     {#each messages as message}
                         {#if message.type === "text" || message.type === undefined}
-                            <p style="color: {message.color};" class="line">{message.text}</p>
+                            <pre style="color: {message.color};" class="line">{message.text}</pre>
                         {:else if message.type === "image"}
                             <img src={message.src} class={message.class || ""} alt=""/>
                         {/if}

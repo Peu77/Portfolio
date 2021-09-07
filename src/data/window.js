@@ -7,8 +7,8 @@ export default class Window {
         this.uuid = uuid()
         this.x = 40
         this.y = 40
-        this.width = 600
-        this.height = 400
+        this.width = 700
+        this.height = 500
         this.barHeight = 30
         this.isOpen = true
     }
