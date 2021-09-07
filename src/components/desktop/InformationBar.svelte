@@ -1,7 +1,5 @@
 <script>
     export let height
-
-
     let time = ""
 
     setInterval(() => {
@@ -10,7 +8,19 @@
 
     function updateTime() {
         const date = new Date()
-        time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+        const hours = date.getHours()
+        const minutes = date.getMinutes()
+        const seconds = date.getSeconds()
+
+        function formatTime(time) {
+            let string = time
+            if (time < 10)
+                string = "0" + string
+
+            return string
+        }
+
+        time = formatTime(hours) + ":" + formatTime(minutes) + ":" + formatTime(seconds)
     }
 
     updateTime()
