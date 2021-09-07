@@ -1,5 +1,6 @@
-##About
+## About
 This is my personal portfolio in form of an operating system. Written with svelte
+
 ## Setup
 
 ```bash
