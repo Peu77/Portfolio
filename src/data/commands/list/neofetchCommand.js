@@ -7,14 +7,14 @@ export default class NeofetchCommand extends Command {
 
     executor(args, utils) {
         const logo = ("                   -`\n" +
-            "                  .o+`                     emil@archlinux\n" +
-            "                 `ooo/                     Name: Emil\n" +
-            "                `+oooo:                    Country: Germany\n" +
-            "               `+oooooo:                   Status: Student\n" +
-            "               -+oooooo+:                  Experience: 5 years\n" +
-            "             `/:-:++oooo+:                 Languages: Java, Kotlin, JavaScript\n" +
+            "                  .o+`                     emil@\sarchlinux\n" +
+            "                 `ooo/                     Name:\s Emil\n" +
+            "                `+oooo:                    Country:\s Germany\n" +
+            "               `+oooooo:                   Status:\s Student\n" +
+            "               -+oooooo+:                  Experience:\s 5 years\n" +
+            "             `/:-:++oooo+:                 Languages:\s Java, Kotlin, JavaScript\n" +
             "            `/++++/+++++++:                TypeScript, C++, Php, Python\n" +
-            "           `/++++++++++++++:               Currently learning: Rust\n" +
+            "           `/++++++++++++++:               Currently learning:\s Rust\n" +
             "          `/+++ooooooooooooo/`\n" +
             "         ./ooosssso++osssssso+`\n" +
             "        .oossssso-````/ossssss+`\n" +

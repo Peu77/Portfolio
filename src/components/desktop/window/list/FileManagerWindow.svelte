@@ -1,6 +1,6 @@
 <script>
     import FileHandler from "../../../../data/file/fileHandler";
-    import {afterUpdate, onMount} from "svelte";
+    import {onMount} from "svelte";
     import {addWindow, getAppByName, updateDataOfContextMenu} from "../../../../data/store";
     import Window from "../../../../data/window";
 
@@ -8,6 +8,7 @@
     let currentPath = ""
     let pathInput
     let currentFile = ""
+    let lastPath = []
     let currentFiles = []
     let fileClickTime = new Map()
 
@@ -25,6 +26,7 @@
 
     updatePath()
     pathInput = currentPath
+    lastPath = [...lastPath, currentPath]
 
     function onClickFile(fileName) {
         let doubleClick = false
@@ -77,7 +79,13 @@
         currentFile = fileName
     }
 
+    function pathBack(){
+        setPath(lastPath[lastPath.length - 1])
+        lastPath = lastPath.pop()
+    }
+
     function setPath(newPath) {
+        lastPath = [...lastPath, currentPath]
         currentPath = newPath
         pathInput = newPath
         FileHandler.changePath(window.uuid, newPath)
@@ -92,6 +100,7 @@
 </script>
 <div class="fileManager">
     <div class="inputs">
+        <img class="backButton" on:click={pathBack} src="left-arrow.svg" alt="back-button"/>
         <input class="input" type="text" placeholder="url" bind:value={pathInput} on:keypress={event => {
         if(event.key === "Enter"){
             const findPath = FileHandler.findPath(window.uuid, pathInput)
@@ -129,6 +138,9 @@
     .inputs {
         display: flex;
         margin-bottom: 10px;
+        padding: 5px;
+        gap: 10px;
+
     }
 
     .input {
@@ -167,5 +179,19 @@
         -webkit-user-drag: none;
         user-select: none;
         width: 100%;
+    }
+
+    .backButton{
+        max-width: 30px;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-drag: none;
+        color: white;
+        transition: filter 0.1s;
+    }
+
+    .backButton:hover{
+       filter: brightness(66%);
+
     }
 </style>
