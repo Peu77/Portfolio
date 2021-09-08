@@ -3,6 +3,7 @@ import {v4 as uuid} from "uuid"
 export default class Window {
     static defaultWidth = 700
     static defaultHeight = 500
+    static windowGap = 10
 
     constructor(title, content, spawnAtCenter) {
         this.content = content
@@ -22,8 +23,8 @@ export default class Window {
     }
 
     setToCenter() {
-        const websiteWidth = document.body.clientWidth
-        const websiteHeight = document.body.clientHeight
+        const websiteWidth = Window.getWebsiteWidth()
+        const websiteHeight = Window.getWebsiteHeight()
         const newWidth = websiteWidth * 70 / 100
         const newHeight = websiteHeight * 70 / 100
 
@@ -31,6 +32,53 @@ export default class Window {
         this.height = newHeight
         this.x = websiteWidth / 2 - newWidth / 2
         this.y = websiteHeight / 2 - newHeight / 2
+    }
+
+    setFullscreen(informationBarHeight, taskBarHeight) {
+        this.width = Window.getWebsiteWidth()
+        this.setMaxHeight(informationBarHeight, taskBarHeight)
+        this.x = 0
+        this.y = informationBarHeight
+    }
+
+    /**
+     * set the window to the left corner with 50% width of the desktop
+     * @param informationBarHeight
+     * @param taskBarHeight
+     */
+    setLeft(informationBarHeight, taskBarHeight) {
+        this.x = 0
+        this.y = informationBarHeight
+        this.width = Window.getWebsiteWidth() * 50 / 100 - Window.windowGap
+        this.setMaxHeight(informationBarHeight, taskBarHeight)
+        this.fullscreen = false
+    }
+
+    setRight(informationBarHeight, taskBarHeight) {
+        const halfWidth = Window.getWebsiteWidth() * 50 / 100
+
+        this.x = halfWidth + Window.windowGap
+        this.y = informationBarHeight
+        this.width = halfWidth - Window.windowGap
+        this.setMaxHeight(informationBarHeight, taskBarHeight)
+        this.fullscreen = false
+    }
+
+    /**
+     * set the height to the maximal
+     * @param informationBarHeight
+     * @param taskBarHeight
+     */
+    setMaxHeight(informationBarHeight, taskBarHeight) {
+        this.height = Window.getWebsiteHeight() - informationBarHeight - taskBarHeight
+    }
+
+    static getWebsiteWidth() {
+        return document.body.clientWidth
+    }
+
+    static getWebsiteHeight() {
+        return document.body.clientHeight
     }
 
     /**

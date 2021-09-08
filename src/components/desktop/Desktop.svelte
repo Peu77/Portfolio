@@ -81,18 +81,20 @@
                     case "C":
                         removeWindow(hoverWindow.uuid)
                         break
+                    case "J":
+                        hoverWindow.setLeft(informationBarHeight, taskBarHeight)
+                        callHooks("window/" + hoverWindow.uuid)
+                        break
+                    case "K":
+                        hoverWindow.setRight(informationBarHeight, taskBarHeight)
+                        callHooks("window/" + hoverWindow.uuid)
+                        break
                     case "F":
-                        const websiteWidth = document.body.clientWidth
-                        const websiteHeight = document.body.clientHeight
 
-                        if (hoverWindow.fullscreen) {
+                        if (hoverWindow.fullscreen)
                             hoverWindow.setToCenter()
-                        } else {
-                            hoverWindow.width = websiteWidth
-                            hoverWindow.height = websiteHeight - informationBarHeight - taskBarHeight
-                            hoverWindow.x = 0
-                            hoverWindow.y = informationBarHeight
-                        }
+                        else
+                            hoverWindow.setFullscreen(informationBarHeight, taskBarHeight)
 
                         hoverWindow.fullscreen = !hoverWindow.fullscreen
 
@@ -115,7 +117,7 @@
     })
     //call on mouse release
     document.addEventListener("mouseup", event => {
-        if(currentWindow !== undefined && currentWindow !== null){
+        if (currentWindow !== undefined && currentWindow !== null) {
             currentWindow.moving = false
             callHooks("window/" + currentWindow.uuid)
             currentWindow = undefined
