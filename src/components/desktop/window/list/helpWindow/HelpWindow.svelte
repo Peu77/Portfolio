@@ -2,6 +2,7 @@
     import {apps} from "../../../../../data/store";
     import KeyBind from "./KeyBind.svelte";
 
+    export let window
 </script>
 
 <div class="helpWindow">

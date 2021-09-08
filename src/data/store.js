@@ -6,9 +6,9 @@ import TerminalWindow from "../components/desktop/window/list/TerminalWindow.sve
 import FileManagerWindow from "../components/desktop/window/list/FileManagerWindow.svelte";
 import FileIcon from "./file/fileIcon";
 
-let helpApp
+
 export let apps = [
-    helpApp = new App("help", "show you help information's","apps/help.svg", HelpWindow, "h"),
+    new App("help", "show you help information's","apps/help.svg", HelpWindow, "h"),
     new App("terminal", "a terminal emulator", "apps/terminal.svg",TerminalWindow, "t", true),
     new App("File Manager", "a graphical user interface for you're files", "apps/file_manager.svg",FileManagerWindow, "f", true),
 ]
@@ -64,7 +64,7 @@ export function registerListener(name, hook) {
 }
 
 export const windowStore = writable([
-    Window.createFromApp(helpApp),
+    new Window("Help", HelpWindow)
 ])
 
 export function getWindow(uuid) {

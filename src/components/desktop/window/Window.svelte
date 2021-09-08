@@ -15,11 +15,7 @@
     function onWindowClick() {
         callHooks("click/" + window.uuid)
 
-        windowStore.update(currentWindows => {
-            const newList = currentWindows.filter(it => it !== window)
-            newList.push(window)
-            return newList
-        })
+        window.setFocus()
     }
 
     updateWindow()

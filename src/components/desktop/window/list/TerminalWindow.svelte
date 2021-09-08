@@ -65,14 +65,14 @@
     }
 
     onMount(() => {
-        textInput = document.getElementById("text/" + window.uuid)
-        scroll = document.getElementById("scroll/" + window.uuid)
+        textInput = document.getElementsByClassName("text/" + window.uuid)[0]
+        scroll = document.getElementsByClassName("scroll/" + window.uuid)[0]
         select()
     })
 </script>
 
 <div id="terminal">
-    <div id="scroll/{window.uuid}" class="scroll"
+    <div class="scroll scroll/{window.uuid}"
          style="max-height: {window.height - window.barHeight}px">
         <div>
             {#each lines as messages}
@@ -90,13 +90,12 @@
         </div>
 
         <form on:submit={submit}
-              id="inputContainer">
+              class="inputContainer">
             <img class="arrow" src="right-arrow.png" alt="arrow"/>
             <p>{currentPath}</p>
             <input
                     on:submit={submit}
-                    class="text"
-                    id="text/{window.uuid}"
+                    class="text text/{window.uuid}"
                     type="text"
                     on:blur={scrollDown}
                     autoCorrect="off"
@@ -122,7 +121,7 @@
         margin-right: 5px;
     }
 
-    #inputContainer {
+    .inputContainer {
         display: flex;
         width: 100%;
         align-content: center;

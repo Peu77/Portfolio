@@ -1,5 +1,5 @@
 import {v4 as uuid} from "uuid"
-import {callHooks} from "./store";
+import {callHooks, getWindows, windowStore} from "./store";
 
 export default class Window {
     static defaultWidth = 700
@@ -12,6 +12,7 @@ export default class Window {
         this.uuid = uuid()
         this.x = 40
         this.y = 40
+        this.appName = ""
         this.width = Window.defaultWidth
         this.height = Window.defaultHeight
         this.barHeight = 30
@@ -65,8 +66,16 @@ export default class Window {
         this.fullscreen = false
     }
 
-    updateGui(){
+    updateGui() {
         callHooks("window/" + this.uuid)
+    }
+
+    setFocus() {
+        windowStore.update(currentWindows => {
+            const newList = currentWindows.filter(it => it !== this)
+            newList.push(this)
+            return newList
+        })
     }
 
     /**
@@ -86,13 +95,19 @@ export default class Window {
         return document.body.clientHeight
     }
 
+    equalApp(app){
+        return this.appName === app.name || this.title.toLowerCase() === app.name.toLowerCase()
+    }
+
     /**
      * create a Window instance from a app
      * @param app
      * @returns {*}
      */
     static createFromApp(app) {
-        return new Window(app.name, app.content, app.spawnAtCenter)
+        const newWindow = new Window(app.name + " " + (getWindows().filter(window => window.appName === app.name).length + 1), app.content, app.spawnAtCenter)
+        newWindow.appName = app.name
+        return newWindow
     }
 
     /**

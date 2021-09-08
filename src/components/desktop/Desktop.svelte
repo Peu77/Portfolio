@@ -176,10 +176,11 @@
 
 <div id="desktop">
     <InformationBar height={informationBarHeight}/>
-    <TaskBar height={taskBarHeight}/>
     {#each windows as window, i(window.uuid)}
         <Window uuid={window.uuid}/>
     {/each}
+
+    <TaskBar height={taskBarHeight}/>
 
     <ContextMenu data={currentContext}/>
 
