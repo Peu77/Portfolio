@@ -71,7 +71,10 @@
                     <div class="windows">
                         {#each windowsOfApps[app.name] as window}
                             <div on:click={() => clickWindow(window)} class="window">
-                                <svelte:component this={window.content} window={window}/>
+                                <p>{window.title}</p>
+                                <div class="content">
+                                    <svelte:component this={window.content} window={window}/>
+                                </div>
                             </div>
                         {/each}
                     </div>
@@ -160,7 +163,6 @@
     }
 
     .window {
-        background-color: black;
         min-width: 300px;
         min-height: 200px;
         max-width: 300px;
@@ -171,11 +173,18 @@
 
     }
 
+    .window .content{
+        background-color: black;
+    }
+
     .window:hover {
         transform: scale(1.1);
     }
 
     .window p {
         color: white;
+        text-align: center;
+        font-size: 15px;
+        font-weight: bold;
     }
 </style>
