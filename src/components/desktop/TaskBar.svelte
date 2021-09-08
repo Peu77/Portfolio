@@ -40,9 +40,12 @@
     .appIcon{
         min-width: 50px;
         transition: transform 0.1s;
+        transition: all 0.3s;
+        transform-origin: 50% 100%;
     }
 
     .appIcon:hover{
-        transform: scale(1.2);
+        transform: scale(1.3);
+        margin: 0 0.5em;
     }
 </style>

@@ -15,6 +15,7 @@ export default class Window {
         this.barHeight = 30
         this.fullscreen = false
         this.isOpen = true
+        this.moving = false
     }
 
     /**

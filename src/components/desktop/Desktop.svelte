@@ -120,7 +120,12 @@
     })
     //call on mouse release
     document.addEventListener("mouseup", event => {
-        currentWindow = undefined
+        if(currentWindow !== undefined && currentWindow !== null){
+            currentWindow.moving = false
+            callHooks("window/" + currentWindow.uuid)
+            currentWindow = undefined
+        }
+
         resizing = false
         xDist = 0
         yDist = 0
@@ -165,6 +170,7 @@
                 window.x = newX
                 window.y = newY
             }
+            window.moving = true
             callHooks("window/" + window.uuid)
         }
     })

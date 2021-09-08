@@ -1,7 +1,7 @@
 <script>
     import WindowBar from "./WindowBar.svelte";
     import {callHooks, getWindow, registerListener, windowStore} from "../../../data/store";
-    import { fade } from "svelte/transition";
+    import { fade, fly } from "svelte/transition";
 
     export let uuid
     let window
@@ -32,12 +32,7 @@
 <div id="window"
      in:fade={{delay: 5, duration: 200}} out:fade={{delay: 5, duration: 100}}
      on:mousedown={onWindowClick}
-     style="
-        width: {window.width}px;
-        height: {window.height}px;
-        left: {window.x}px;
-        top: {window.y}px;
-">
+     style={"width: " + window.width + "px; height: " + window.height +"px; left: " + window.x + "px; top: " +window.y + "px;" + (window.moving ? "transition: none" : "")}>
     <WindowBar title={window.title} height={window.barHeight}/>
     <svelte:component this={window.content} window={window}/>
 </div>
@@ -48,6 +43,7 @@
         background-color: #1c1c1c;
         border-radius: 0.5em;
         overflow: hidden;
+        transition: width 0.2s, height 0.2s, left 0.2s, top 0.2s ;
     }
 
     #window:hover {
