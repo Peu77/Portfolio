@@ -4,7 +4,7 @@ export default class Window {
     static defaultWidth = 700
     static defaultHeight = 500
 
-    constructor(title, content) {
+    constructor(title, content, spawnAtCenter) {
         this.content = content
         this.title = title
         this.uuid = uuid()
@@ -16,6 +16,21 @@ export default class Window {
         this.fullscreen = false
         this.isOpen = true
         this.moving = false
+
+        if (spawnAtCenter)
+            this.setToCenter()
+    }
+
+    setToCenter() {
+        const websiteWidth = document.body.clientWidth
+        const websiteHeight = document.body.clientHeight
+        const newWidth = websiteWidth * 70 / 100
+        const newHeight = websiteHeight * 70 / 100
+
+        this.width = newWidth
+        this.height = newHeight
+        this.x = websiteWidth / 2 - newWidth / 2
+        this.y = websiteHeight / 2 - newHeight / 2
     }
 
     /**
@@ -24,7 +39,7 @@ export default class Window {
      * @returns {*}
      */
     static createFromApp(app) {
-        return new Window(app.name, app.content)
+        return new Window(app.name, app.content, app.spawnAtCenter)
     }
 
     /**

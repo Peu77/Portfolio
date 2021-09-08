@@ -40,10 +40,10 @@
 <style>
     #window {
         position: absolute;
-        background-color: #1c1c1c;
+        background-color: rgba(28, 28, 28, 0.84);
         border-radius: 0.5em;
         overflow: hidden;
-        transition: width 0.2s, height 0.2s, left 0.2s, top 0.2s ;
+        transition: width 0.2s, height 0.2s, left 0.2s, top 0.2s;
     }
 
     #window:hover {

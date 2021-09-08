@@ -86,12 +86,7 @@
                         const websiteHeight = document.body.clientHeight
 
                         if (hoverWindow.fullscreen) {
-                            const newWidth = WindowData.defaultWidth
-                            const newHeight = WindowData.defaultHeight
-                            hoverWindow.width = newWidth
-                            hoverWindow.height = newHeight
-                            hoverWindow.x = websiteWidth / 2 - newWidth / 2
-                            hoverWindow.y = websiteHeight / 2 - newHeight / 2
+                            hoverWindow.setToCenter()
                         } else {
                             hoverWindow.width = websiteWidth
                             hoverWindow.height = websiteHeight - informationBarHeight - taskBarHeight

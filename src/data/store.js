@@ -9,8 +9,8 @@ import FileIcon from "./file/fileIcon";
 let helpApp
 export let apps = [
     helpApp = new App("help", "show you help information's","apps/help.svg", HelpWindow, "h"),
-    new App("terminal", "a terminal emulator", "apps/terminal.svg",TerminalWindow, "t"),
-    new App("File Manager", "a graphical user interface for you're files", "apps/file_manager.svg",FileManagerWindow, "f"),
+    new App("terminal", "a terminal emulator", "apps/terminal.svg",TerminalWindow, "t", true),
+    new App("File Manager", "a graphical user interface for you're files", "apps/file_manager.svg",FileManagerWindow, "f", true),
 ]
 
 export function getAppByName(appName) {
