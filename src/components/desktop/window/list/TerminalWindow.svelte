@@ -14,6 +14,14 @@
         currentPath = FileHandler.getFilePath(window.uuid)
     }
 
+    const dirArgument = window.getArgument("-dir")
+    if (dirArgument !== undefined && dirArgument.value !== undefined) {
+        console.log(dirArgument.value)
+        const foundPath = FileHandler.findPath(window.terminalUUID, dirArgument.value)
+        FileHandler.changePath(window.uuid, foundPath.path)
+        updatePath()
+    }
+
     updatePath()
     registerListener("click/" + window.uuid, () => {
         select()

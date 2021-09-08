@@ -12,6 +12,12 @@
     let currentFiles = []
     let fileClickTime = new Map()
 
+    const dirArgument = window.getArgument("-dir")
+    if (dirArgument !== undefined && dirArgument.value !== undefined) {
+        const foundPath = FileHandler.findPath(window.terminalUUID, dirArgument.value)
+        setPath(foundPath.path)
+    }
+
     FileHandler.files.subscribe(files => {
         updateCurrentFiles()
     })
@@ -79,7 +85,7 @@
         currentFile = fileName
     }
 
-    function pathBack(){
+    function pathBack() {
         setPath(lastPath[lastPath.length - 1])
         lastPath = lastPath.pop()
     }
@@ -181,7 +187,7 @@
         width: 100%;
     }
 
-    .backButton{
+    .backButton {
         max-width: 30px;
         cursor: pointer;
         user-select: none;
@@ -190,8 +196,8 @@
         transition: filter 0.1s;
     }
 
-    .backButton:hover{
-       filter: brightness(66%);
+    .backButton:hover {
+        filter: brightness(66%);
 
     }
 </style>
