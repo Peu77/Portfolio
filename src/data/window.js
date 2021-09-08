@@ -19,6 +19,7 @@ export default class Window {
         this.fullscreen = false
         this.isOpen = true
         this.moving = false
+        this.args = []
 
         if (spawnAtCenter)
             this.setToCenter()
@@ -76,6 +77,14 @@ export default class Window {
             newList.push(this)
             return newList
         })
+    }
+
+    hasArgument(name){
+        return getArgument(name) !== undefined
+    }
+
+    getArgument(name){
+        return this.args.find(argument => argument.name.toLowerCase() === name.toLowerCase())
     }
 
     /**
