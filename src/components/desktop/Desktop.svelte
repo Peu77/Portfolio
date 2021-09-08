@@ -9,7 +9,6 @@
         windowStore
     } from "../../data/store"
     import Window from "./window/Window.svelte";
-    import WindowData from "../../data/window"
     import WindowClass from "../../data/window"
     import InformationBar from "./InformationBar.svelte";
     import ContextMenu from "./ContextMenu.svelte";
@@ -83,11 +82,11 @@
                         break
                     case "J":
                         hoverWindow.setLeft(informationBarHeight, taskBarHeight)
-                        callHooks("window/" + hoverWindow.uuid)
+                        hoverWindow.updateGui()
                         break
                     case "K":
                         hoverWindow.setRight(informationBarHeight, taskBarHeight)
-                        callHooks("window/" + hoverWindow.uuid)
+                        hoverWindow.updateGui()
                         break
                     case "F":
 
@@ -98,7 +97,7 @@
 
                         hoverWindow.fullscreen = !hoverWindow.fullscreen
 
-                        callHooks("window/" + hoverWindow.uuid)
+                        hoverWindow.updateGui()
                         break
                 }
             return
@@ -119,7 +118,7 @@
     document.addEventListener("mouseup", event => {
         if (currentWindow !== undefined && currentWindow !== null) {
             currentWindow.moving = false
-            callHooks("window/" + currentWindow.uuid)
+            currentWindow.updateGui()
             currentWindow = undefined
         }
 
@@ -168,7 +167,7 @@
                 window.y = newY
             }
             window.moving = true
-            callHooks("window/" + window.uuid)
+            window.updateGui()
         }
     })
 

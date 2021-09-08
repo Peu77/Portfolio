@@ -68,21 +68,26 @@ export const windowStore = writable([
 ])
 
 export function getWindow(uuid) {
+    return getWindows().find(window => window.uuid === uuid)
+}
+
+export function getWindows() {
     let windows = []
 
     windowStore.subscribe(value => windows = value)
-
-    return windows.find(window => window.uuid === uuid)
+    return windows
 }
 
 export function addWindow(window) {
     windowStore.update(windows => {
         return [...windows, window]
     })
+    callHooks("updateApps")
 }
 
 export function removeWindow(uuid) {
     windowStore.update(windows => {
         return windows.filter(window => window.uuid !== uuid)
     })
+    callHooks("updateApps")
 }

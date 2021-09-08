@@ -1,4 +1,5 @@
 import {v4 as uuid} from "uuid"
+import {callHooks} from "./store";
 
 export default class Window {
     static defaultWidth = 700
@@ -62,6 +63,10 @@ export default class Window {
         this.width = halfWidth - Window.windowGap
         this.setMaxHeight(informationBarHeight, taskBarHeight)
         this.fullscreen = false
+    }
+
+    updateGui(){
+        callHooks("window/" + this.uuid)
     }
 
     /**
