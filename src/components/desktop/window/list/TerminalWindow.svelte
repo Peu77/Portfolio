@@ -125,7 +125,6 @@
         display: flex;
         width: 100%;
         align-content: center;
-
     }
 
     .arrow {

@@ -4,6 +4,7 @@ import ListDirectoryCommand from "./list/listDirectoryCommand";
 import ChangeDirectoryCommand from "./list/changeDirectoryCommand";
 import MakeDirectoryCommand from "./list/makeDirectoryCommand";
 import NeofetchCommand from "./list/neofetchCommand";
+import StartCommand from "./list/startCommand";
 
 export default class CommandHandler {
     static commands = [
@@ -12,7 +13,8 @@ export default class CommandHandler {
         new ListDirectoryCommand(),
         new ChangeDirectoryCommand(),
         new MakeDirectoryCommand(),
-        new NeofetchCommand()
+        new NeofetchCommand(),
+        new StartCommand()
     ]
 
     static execute(input, utils) {

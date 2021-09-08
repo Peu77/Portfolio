@@ -170,6 +170,7 @@
         overflow: hidden;
         transition: all 0.3s;
         transform-origin: 50% 100%;
+        background-color: black;
 
     }
 
