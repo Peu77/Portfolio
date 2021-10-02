@@ -1,7 +1,10 @@
 <script>
+    import {removeWindow} from "../../../data/store";
+
     export let height
     export let actionWidth
     export let title
+    export let uuid
 </script>
 
 <div id="container" style="height: {height}px">
@@ -13,7 +16,7 @@
     <div class="actions" style="width: {actionWidth}px">
         <div class="minimize"></div>
         <div class="toggle"></div>
-        <div class="close"></div>
+        <div class="close" on:click={() => removeWindow(uuid)}></div>
     </div>
 </div>
 

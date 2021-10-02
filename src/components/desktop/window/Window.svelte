@@ -30,7 +30,7 @@
          in:fade={{delay: 5, duration: 200}} out:fade={{delay: 5, duration: 100}}
          on:mousedown={onWindowClick}
          style={"width: " + window.width + "px; height: " + window.height +"px; left: " + window.x + "px; top: " +window.y + "px;" + (window.moving ? "transition: none" : "")}>
-        <WindowBar title={window.title} height={window.barHeight} actionWidth={window.actionWidth}/>
+        <WindowBar title={window.title} height={window.barHeight} actionWidth={window.actionWidth} uuid={window.uuid}/>
         <svelte:component this={window.content} window={window}/>
     </div>
 {/if}

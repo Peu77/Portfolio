@@ -86,7 +86,7 @@
         height: 100%;
         position: absolute;
         max-width: 800px;
-        max-height: 1000px;
+        max-height: 600px;
         left: 50%;
         top: 50%;
         background-color: #111111;
