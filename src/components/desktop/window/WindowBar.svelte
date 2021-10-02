@@ -1,22 +1,22 @@
 <script>
     import {removeWindow} from "../../../data/store";
 
-    export let height
-    export let actionWidth
-    export let title
-    export let uuid
+    export let window
 </script>
 
-<div id="container" style="height: {height}px">
+<div id="container" style="height: {window.barHeight}px">
     <div id="windowBar">
-        <p id="title">{title}</p>
+        <p id="title">{window.title}</p>
     </div>
 
 
-    <div class="actions" style="width: {actionWidth}px">
-        <div class="minimize"></div>
+    <div class="actions" style="width: {window.actionWidth}px">
+        <div class="minimize" on:click={() => {
+             window.isOpen = !window.isOpen
+             window.updateGui()
+        }}></div>
         <div class="toggle"></div>
-        <div class="close" on:click={() => removeWindow(uuid)}></div>
+        <div class="close" on:click={() => removeWindow(window.uuid)}></div>
     </div>
 </div>
 
