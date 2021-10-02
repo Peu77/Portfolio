@@ -5,12 +5,14 @@ import App from "./app";
 import TerminalWindow from "../components/desktop/window/list/TerminalWindow.svelte";
 import FileManagerWindow from "../components/desktop/window/list/FileManagerWindow.svelte";
 import FileIcon from "./file/fileIcon";
+import EditorWindow from "../components/desktop/window/list/EditorWindow.svelte";
 
 
 export let apps = [
     new App("help", "show you help information's","apps/help.svg", HelpWindow, "h"),
     new App("terminal", "a terminal emulator", "apps/terminal.svg",TerminalWindow, "t", true),
     new App("File Manager", "a graphical user interface for you're files", "apps/file_manager.svg",FileManagerWindow, "f", true),
+    new App("Editor", "a simple text editor", "apps/editor.svg", EditorWindow, "e", true),
 ]
 
 export function getAppByName(appName) {
