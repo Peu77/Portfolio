@@ -16,6 +16,7 @@ export default class Window {
         this.width = Window.defaultWidth
         this.height = Window.defaultHeight
         this.barHeight = 30
+        this.actionWidth = 50
         this.fullscreen = false
         this.isOpen = true
         this.moving = false
@@ -128,7 +129,7 @@ export default class Window {
      */
     isHover(mouseX, mouseY, drag) {
         return mouseX > this.x &&
-            mouseX < this.x + this.width &&
+            mouseX < this.x + (drag ? this.width - this.actionWidth : this.width) &&
             mouseY > this.y &&
             mouseY < this.y + (drag ? this.barHeight : this.height)
     }
