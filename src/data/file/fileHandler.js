@@ -10,14 +10,13 @@ export default class FileHandler {
         new File("/.config/colors/settings.txt", FileType.FILE),
     ])
 
-
     static addFile(file) {
         this.files.update(files => {
             return [...files, file]
         })
     }
 
-    static removeFile(file){
+    static removeFile(file) {
         this.files.update(files => {
             return files.filter(target => target !== file)
         })
@@ -44,23 +43,29 @@ export default class FileHandler {
     static getFilesInCurrentDirectory(terminalUUID) {
         const currentPath = this.getFilePath(terminalUUID)
 
-        return this.getFiles().filter(file => {
-            if (!file.name.includes("/") && !currentPath.includes("/")) {
-                return true
-            } else return file.name.replace(file.getName(), "") === currentPath
-        })
+        return this.getFilesInDirectory(currentPath)
     }
 
-    static getFilesInDirectory(directory) {
-        const currentPath = this.getFilePath(directory)
-        return this.getFiles().filter(file => {
-            if (!file.name.includes("/") && !currentPath.includes("/")) {
+    static getFilesInDirectory(directoryPath, filesOfChildDirectories = false) {
+        console.log("search: " + directoryPath)
+        const files = []
+        this.getFiles().filter(file => {
+            if (!file.name.includes("/") && !directoryPath.includes("/")) {
                 return true
-            } else return file.name.replace(file.getName(), "") === currentPath
+            } else return file.name.replace(file.getName(), "") === directoryPath
+        }).forEach(file => {
+            if (filesOfChildDirectories && file.type === FileType.FOLDER)
+                    this.getFilesInDirectory(file.name + "/").forEach(target => {
+                        console.log(target.name)
+                        files.push(target)
+                    })
+
+                files.push(file)
         })
+        return files
     }
 
-    static getFile(path){
+    static getFile(path) {
         return this.getFiles().find(file => file.name === path)
     }
 
