@@ -1,5 +1,6 @@
 import Command from "../command";
 import FileHandler from "../../file/fileHandler";
+import {FileType} from "../../file/file";
 
 export default class RemoveCommand extends Command {
     constructor() {
@@ -19,6 +20,13 @@ export default class RemoveCommand extends Command {
 
         if (newPath.exist) {
             const file = FileHandler.getFile(path)
+            if (file.type === FileType.FOLDER) {
+                FileHandler.getFilesInDirectory(file.name + "/", true).forEach(target => {
+                    utils.push("delete: " + target.getName())
+                    target.delete()
+                })
+            }
+        utils.push("delete: " + file.getName())
             file.delete()
         } else {
             utils.push("file doesn't exist")

@@ -54,13 +54,14 @@ export default class FileHandler {
                 return true
             } else return file.name.replace(file.getName(), "") === directoryPath
         }).forEach(file => {
+            console.log("found" + file.name)
             if (filesOfChildDirectories && file.type === FileType.FOLDER)
-                    this.getFilesInDirectory(file.name + "/").forEach(target => {
-                        console.log(target.name)
-                        files.push(target)
-                    })
+                this.getFilesInDirectory(file.name + "/").forEach(target => {
+                    console.log(target.name)
+                    files.push(target)
+                })
 
-                files.push(file)
+            files.push(file)
         })
         return files
     }
