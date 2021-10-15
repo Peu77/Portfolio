@@ -5,6 +5,7 @@ import ChangeDirectoryCommand from "./list/changeDirectoryCommand";
 import MakeDirectoryCommand from "./list/makeDirectoryCommand";
 import NeofetchCommand from "./list/neofetchCommand";
 import StartCommand from "./list/startCommand";
+import RemoveCommand from "./list/removeCommand";
 
 export default class CommandHandler {
     static commands = [
@@ -14,7 +15,8 @@ export default class CommandHandler {
         new ChangeDirectoryCommand(),
         new MakeDirectoryCommand(),
         new NeofetchCommand(),
-        new StartCommand()
+        new StartCommand(),
+        new RemoveCommand()
     ]
 
     static execute(input, utils) {

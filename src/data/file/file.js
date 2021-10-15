@@ -1,4 +1,5 @@
 import {fileIcons} from "../store";
+import FileHandler from "./fileHandler";
 
 
 export const FileType = {
@@ -16,6 +17,10 @@ export default class File {
     getName() {
         const list = this.name.split("/")
         return list[list.length - 1]
+    }
+
+    delete(){
+        FileHandler.removeFile(this)
     }
 
     getFileEnding() {

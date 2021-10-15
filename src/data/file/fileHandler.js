@@ -17,6 +17,12 @@ export default class FileHandler {
         })
     }
 
+    static removeFile(file){
+        this.files.update(files => {
+            return files.filter(target => target !== file)
+        })
+    }
+
     static getFilePath(terminalUUID) {
         let path = ""
         this.filePaths.subscribe(value => {
@@ -52,6 +58,10 @@ export default class FileHandler {
                 return true
             } else return file.name.replace(file.getName(), "") === currentPath
         })
+    }
+
+    static getFile(path){
+        return this.getFiles().find(file => file.name === path)
     }
 
     static findPath(terminalUUID, pathTo, cancelOnNotFound = true) {
